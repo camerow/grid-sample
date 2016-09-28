@@ -1,6 +1,9 @@
 #root {
   font-family: 'Slabo 27px', serif;
 }
+h2 {
+  margin-top: 12px;
+}
 .App {
   text-align: center;
 }
@@ -10,8 +13,8 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 50px;
+  background-color: #3c719f;
+  min-height: 50px;
   color: white;
   text-align: center;
 }
@@ -19,6 +22,27 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.button {
+  display: none;
+  margin: 20px 0;
+  border: none;
+  height: 40px;
+  width: 91px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.delete {
+  background-color: rgba(193, 29, 29, 0.76);
+}
+
+.delete:hover {
+  background-color: rgba(193, 29, 29, 0.86);
 }
 /*
 .child-row:before {

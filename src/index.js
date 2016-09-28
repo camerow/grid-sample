@@ -7,14 +7,16 @@ import faker from 'faker';
 const products = [],
       transactions = [];
 
-for (var i = 0; i < 100; i++) {
+for (var i = 0; i < 10; i++) {
   let productUUID = faker.random.uuid();
+  let category = faker.commerce.product();
+  let name = faker.commerce.productAdjective() + ' ' + category;
 
   const product = {
     id: productUUID,
     data: {
-      productCategory: faker.commerce.productAdjective(),
-      productName: faker.commerce.productName()
+      productCategory: category,
+      productName: name
     }
   };
 
@@ -23,9 +25,9 @@ for (var i = 0; i < 100; i++) {
   for (var j = 0; j < Math.floor(Math.random() * 50); j++) {
     const transaction = {
       id: faker.random.uuid(),
-      product: productUUID,
+      parent: productUUID,
       data: {
-        date: faker.date.past(),
+        date: faker.finance.amount(),
         name: faker.name.firstName() + ' ' + faker.name.lastName(),
         transaction: faker.finance.transactionType()
       }
