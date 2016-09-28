@@ -18,7 +18,6 @@ class App extends Component {
 
   render() {
     const { products, transactions } = this.props.data;
-    console.log(transactions);
     return (
       <div className="container-fluid">
         <div className="App-header row">
@@ -76,7 +75,6 @@ class GridRow extends Component {
 
   buildChildRows(children) {
     let kids = children.map((child, i) => {
-      console.log(child);
       return (
         <div key={i + child} className='container'>
 
