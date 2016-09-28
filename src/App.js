@@ -1,21 +1,45 @@
 import React, { Component } from 'react';
 import './App.css';
-import data from '../db.json';
+// import data from '../db.json';
 
-const { products, transactions } = data;
-console.log(transactions);
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      childrenSelected: []
+    }
+  }
+
+  selectChildRow(rowID) {
+    this.setState({
+      childrenSelected: this.state.childrenSelected.push(rowID)
+    })
+  }
+
   render() {
+    const { products, transactions } = this.props.data;
+    console.log(transactions);
     return (
       <div className="container-fluid">
         <div className="App-header row">
+          <div className="col-md-12">
+            <h2 style={{color:"#fff"}}>
+              React Training
+            </h2>
+          </div>
         </div>
         <Grid>
           {
             products.map((product, i) => {
               const { data, id } = product;
               return (
-                <GridRow key={id} {...data} transactions={transactions.filter((trans) => trans.id === product.id)} />
+                <GridRow {...data}
+                  key={id}
+                  onRowClick={(rowID) => this.selectChildRow(rowID)}
+                  selected={this.state.childrenSelected}
+                  children={transactions.filter((trans) => {
+                    return trans.product === product.id
+                  })} />
               );
             })
           }
@@ -40,6 +64,7 @@ class GridRow extends Component {
     super();
     this.state =  {
       showChildRows: false
+
     };
   }
 
@@ -49,8 +74,31 @@ class GridRow extends Component {
     })
   }
 
+  buildChildRows(children) {
+    let kids = children.map((child, i) => {
+      console.log(child);
+      return (
+        <div key={i + child} className='container'>
+
+          <div className='child-row row'>
+            <div className='col-md-offset-1 col-md-3' key={i+child.id}>
+              {child.data.name}
+            </div>
+            <div className='col-md-4'>
+              {child.data.transaction}
+            </div>
+            <div className='col-md-4'>
+              {child.data.date + ''}
+            </div>
+          </div>
+        </div>
+      );
+    });
+    return kids;
+  }
+
   render() {
-    const { productCategory, productName, transactions } = this.props;
+    const { productCategory, productName, children } = this.props;
 
     return (
       <div>
@@ -62,30 +110,12 @@ class GridRow extends Component {
             {productCategory}
           </div>
           <div className="col-md-4">
-            {`${transactions.length} transactions`}
+            {`${children.length} transactions`}
           </div>
-        {this.props.children}
         </div>
         {
           this.state.showChildRows ?
-          transactions.map((trans, i) => {
-            return (
-              <div className='container'>
-
-                <div className='child-row row'>
-                  <div className='col-md-offset-1 col-md-3' key={i+trans.id}>
-                    {trans.data.name}
-                  </div>
-                  <div className='col-md-4'>
-                    {trans.data.transaction}
-                  </div>
-                  <div className='col-md-4'>
-                    {trans.data.date}
-                  </div>
-                </div>
-              </div>
-            );
-          })
+          this.buildChildRows(children)
           :
           null
         }
