@@ -25,7 +25,7 @@ h2 {
 }
 
 .button {
-  display: none;
+  /*display: none;*/
   margin: 20px 0;
   border: none;
   height: 40px;
@@ -37,6 +37,9 @@ h2 {
   font-weight: 500;
 }
 
+.navigation-btn {
+  background-color: #1c885b;
+}
 .delete {
   background-color: rgba(193, 29, 29, 0.76);
 }
